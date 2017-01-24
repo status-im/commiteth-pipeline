@@ -14,7 +14,7 @@
   (git/clone ctx repo-uri repo-branch (:cwd args)))
 
 (defn build-uberjar [args ctx]
-  (shell/bash ctx (:cwd args) "lein uberjar"))
+  (shell/bash ctx (:cwd args) "lein sassc once && lein uberjar"))
 
 (defn run-tests [args ctx]
   (shell/bash ctx (:cwd args) "echo no test running for now"))
