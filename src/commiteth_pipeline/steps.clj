@@ -2,7 +2,7 @@
   (:require
    [lambdacd.steps.shell :as shell]
    [lambdacd-git.core :as git]
-   [lambdacd-git.artifacts :as artifacts]
+   [lambdacd-artifacts.core :as artifacts]
    [clojure.tools.logging :as log]))
 
 
@@ -17,7 +17,9 @@
   (shell/bash ctx (:cwd args) "lein uberjar"))
 
 (defn run-tests [args ctx]
-  (shell/bash ctx "/" "echo no test running for now"))
+  (shell/bash ctx (:cwd args) "echo no test running for now"))
 
 (defn deploy-uberjar [args ctx]
-  (shell/bash ctx "/" "sudo service commiteth stop && cp target/commieth.jar /opt/commiteth && service commiteth start"))
+  (shell/bash ctx
+              (:cwd args)
+              "sudo service commiteth stop && cp target/commieth.jar /opt/commiteth && sudo service commiteth start"))
