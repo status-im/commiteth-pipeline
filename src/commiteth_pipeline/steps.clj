@@ -22,4 +22,4 @@
 (defn deploy-uberjar [args ctx]
   (shell/bash ctx
               (:cwd args)
-              "pwd; ls -l;sudo service commiteth stop && cp target/commiteth.jar /opt/commiteth/commiteth.jar && sudo service commiteth start"))
+              "sudo service commiteth stop && cp target/uberjar/commiteth.jar /opt/commiteth/commiteth.jar && sudo service commiteth start"))
