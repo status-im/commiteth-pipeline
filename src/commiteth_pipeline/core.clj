@@ -18,7 +18,7 @@
 (def pipeline-atom (atom nil))
 
 (defn start []
-  (let [home-dir (io/file "/tmp/foo") #_(env :home-dir)
+  (let [home-dir (env :home-dir)
         config {:home-dir home-dir
                 :name "commiteth pipeline"}
         pipeline (lambdacd/assemble-pipeline pipeline/pipeline-def config)]

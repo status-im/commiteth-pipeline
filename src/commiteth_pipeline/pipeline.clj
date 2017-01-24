@@ -1,4 +1,5 @@
 (ns commiteth-pipeline.pipeline
+  (:refer-clojure :exclude [alias])
   (:require
    [commiteth-pipeline.steps :refer :all]
    [lambdacd.steps.control-flow :refer :all]
