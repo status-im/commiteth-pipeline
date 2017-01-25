@@ -9,6 +9,11 @@
 (def repo-uri "https://github.com/status-im/commiteth.git")
 (def repo-branch "master")
 
+(defn wait-for-git [args ctx]
+  (git/wait-for-git ctx repo-uri
+                     :ref "refs/heads/master"
+                     :ms-between-polls (* 30 1000)))
+
 (defn git-clone [args ctx]
   (shell/bash ctx (:cwd args) "pwd")
   (git/clone ctx repo-uri repo-branch (:cwd args)))

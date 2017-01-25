@@ -7,9 +7,11 @@
    [lambdacd-git.core :as git]))
 
 
-(def pipeline-def
-  `(
-    manualtrigger/wait-for-manual-trigger
+
+
+(def ^:const pipeline-def
+  `((either wait-for-git
+            manualtrigger/wait-for-manual-trigger)
     (with-workspace
       git-clone
       git/list-changes
