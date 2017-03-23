@@ -31,7 +31,8 @@
               "sudo service commiteth stop && cp target/uberjar/commiteth.jar /opt/commiteth/commiteth.jar && sudo service commiteth start"))
 
 (defn slack-notify [args ctx]
-  (let [msg (format "Deployed revision <a href=\"%s\">%s</a> to https://commiteth.com" (:revision args) (:revision args))]
-    (println "Sending slack notification")
+  (let [sha (subs (:revision args) 0 7)
+        msg (format "Deployed revision <%s|%s> to https://commiteth.com" sha sha)]
+    (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
