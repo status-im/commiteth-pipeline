@@ -7,8 +7,6 @@
    [lambdacd-git.core :as git]))
 
 
-
-
 (def ^:const pipeline-def
   `((either wait-for-git
             manualtrigger/wait-for-manual-trigger)
@@ -17,4 +15,5 @@
       git/list-changes
       build-uberjar
       run-tests
-      deploy-uberjar)))
+      deploy-uberjar
+      slack-notify)))

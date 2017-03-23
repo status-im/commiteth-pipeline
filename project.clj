@@ -12,7 +12,9 @@
                  [lambdacd-git "0.2.0"]
                  [compojure "1.5.2"]
                  [mount "0.1.11"]
-                 [lambdacd-artifacts "0.2.1"]]
+                 [lambdacd-artifacts "0.2.1"]
+                 [clj-http "2.3.0"]
+                 [org.clojure/data.json "0.2.6"]]
   :plugins [[lein-environ "1.1.0"]]
   :profiles {:uberjar {:aot :all}
              :dev {:env {:home-dir "./cd-pipeline-home"}}

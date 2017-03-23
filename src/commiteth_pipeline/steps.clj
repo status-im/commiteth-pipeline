@@ -3,7 +3,8 @@
    [lambdacd.steps.shell :as shell]
    [lambdacd-git.core :as git]
    [lambdacd-artifacts.core :as artifacts]
-   [clojure.tools.logging :as log]))
+   [clojure.tools.logging :as log]
+   [commiteth-pipeline.slack :as slack]))
 
 
 (def repo-uri "https://github.com/status-im/commiteth.git")
@@ -28,3 +29,9 @@
   (shell/bash ctx
               (:cwd args)
               "sudo service commiteth stop && cp target/uberjar/commiteth.jar /opt/commiteth/commiteth.jar && sudo service commiteth start"))
+
+(defn slack-notify [args ctx]
+  (let [msg (format "Deployed revision <a href=\"%s\">%s</a> to https://commiteth.com" (:revision args) (:revision args))]
+    (println "Sending slack notification")
+    (slack/slack-notify msg)
+    {:status :success}))
