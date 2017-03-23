@@ -32,7 +32,7 @@
 
 (defn slack-notify [args ctx]
   (let [sha (subs (:revision args) 0 7)
-        msg (format "Deployed revision <%s|%s> to https://commiteth.com" sha sha)]
+        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> to https://commiteth.com" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
