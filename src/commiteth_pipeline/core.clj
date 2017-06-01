@@ -17,6 +17,10 @@
 
 (def pipeline-atom (atom nil))
 
+(defn trythy? [x]
+  ())
+
+
 (defn start []
   (let [home-dir (env :home-dir)
         develop-branch? (env :develop)
@@ -34,7 +38,7 @@
                         (ui/ui-for pipeline)
                         (lambdacd-git/notifications-for pipeline))
                        {:open-browser? false
-                        :port 8080})))
+                        :port (if develop-branch? 8081 8080)})))
 
 (defn stop []
   (lambdacd/default-shutdown-sequence (:context @pipeline-atom)))
