@@ -38,7 +38,7 @@
                         (ui/ui-for pipeline)
                         (lambdacd-git/notifications-for pipeline))
                        {:open-browser? false
-                        :port (if develop-branch? 8081 8080)})))
+                        :port (if develop-branch? 8082 8080)})))
 
 (defn stop []
   (lambdacd/default-shutdown-sequence (:context @pipeline-atom)))
