@@ -8,16 +8,24 @@
 
 
 (def repo-uri "https://github.com/status-im/commiteth.git")
-(def repo-branch "master")
 
-(defn wait-for-git [args ctx]
+(defn wait-for-git-master [args ctx]
   (git/wait-for-git ctx repo-uri
                      :ref "refs/heads/master"
                      :ms-between-polls (* 30 1000)))
 
-(defn git-clone [args ctx]
+(defn wait-for-git-develop [args ctx]
+  (git/wait-for-git ctx repo-uri
+                     :ref "refs/heads/develop"
+                     :ms-between-polls (* 30 1000)))
+
+(defn git-clone-master [args ctx]
   (shell/bash ctx (:cwd args) "pwd")
-  (git/clone ctx repo-uri repo-branch (:cwd args)))
+  (git/clone ctx repo-uri "master" (:cwd args)))
+
+(defn git-clone-develop [args ctx]
+  (shell/bash ctx (:cwd args) "pwd")
+  (git/clone ctx repo-uri "develop" (:cwd args)))
 
 (defn build-uberjar [args ctx]
   (shell/bash ctx (:cwd args) "lein less once && lein uberjar"))
@@ -25,14 +33,26 @@
 (defn run-tests [args ctx]
   (shell/bash ctx (:cwd args) "echo no test running for now"))
 
-(defn deploy-uberjar [args ctx]
+(defn deploy-uberjar-master [args ctx]
   (shell/bash ctx
               (:cwd args)
               "sudo service commiteth stop && cp target/uberjar/commiteth.jar /opt/commiteth/commiteth.jar && sudo service commiteth start"))
 
-(defn slack-notify [args ctx]
+(defn deploy-uberjar-develop [args ctx]
+  (shell/bash ctx
+              (:cwd args)
+              "sudo service commiteth-test stop && cp target/uberjar/commiteth.jar /opt/commiteth-test/commiteth.jar && sudo service commiteth-test start"))
+
+(defn slack-notify-master [args ctx]
   (let [sha (subs (:revision args) 0 7)
         msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> to https://commiteth.com" sha sha)]
+    (println "Sending slack notification" msg)
+    (slack/slack-notify msg)
+    {:status :success}))
+
+(defn slack-notify-develop [args ctx]
+  (let [sha (subs (:revision args) 0 7)
+        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> to https://commiteth.com/test" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))

@@ -7,13 +7,24 @@
    [lambdacd-git.core :as git]))
 
 
-(def ^:const pipeline-def
-  `((either wait-for-git
+(def ^:const pipeline-def-master
+  `((either wait-for-git-master
             manualtrigger/wait-for-manual-trigger)
     (with-workspace
-      git-clone
+      git-clone-master
       git/list-changes
       build-uberjar
       run-tests
-      deploy-uberjar
-      slack-notify)))
+      deploy-uberjar-master
+      slack-notify-master)))
+
+(def ^:const pipeline-def-develop
+  `((either wait-for-git-develop
+            manualtrigger/wait-for-manual-trigger)
+    (with-workspace
+      git-clone-develop
+      git/list-changes
+      build-uberjar
+      run-tests
+      deploy-uberjar-develop
+      slack-notify-develop)))

@@ -19,9 +19,14 @@
 
 (defn start []
   (let [home-dir (env :home-dir)
+        develop-branch? (env :develop)
         config {:home-dir home-dir
                 :name "commiteth pipeline"}
-        pipeline (lambdacd/assemble-pipeline pipeline/pipeline-def config)]
+        pipeline-def (if develop-branch?
+                       pipeline/pipeline-def-develop
+                       pipeline/pipeline-def-master)
+        pipeline (lambdacd/assemble-pipeline pipeline-def config)]
+    (log/info "develop?" develop-branch?)
     (reset! pipeline-atom pipeline)
     (log/info "LambdaCD Home Directory is " home-dir)
     (runners/start-one-run-after-another pipeline)
