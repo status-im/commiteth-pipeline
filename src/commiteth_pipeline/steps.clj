@@ -54,7 +54,7 @@
 (defn slack-notify-develop [args ctx]
   (let [rev (:revision args)
         sha  (if rev (subs rev 0 7) "")
-        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> to https://commiteth.com/test" sha sha)]
+        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> to https://commiteth.com:444" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
