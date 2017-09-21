@@ -28,7 +28,7 @@
   (git/clone ctx repo-uri "develop" (:cwd args)))
 
 (defn build-uberjar [args ctx]
-  (shell/bash ctx (:cwd args) "lein less once && lein uberjar"))
+  (shell/bash ctx (:cwd args) {"LEIN_SNAPSHOTS_IN_RELEASE" "1"}  "lein less once && lein uberjar"))
 
 (defn run-tests [args ctx]
   (shell/bash ctx (:cwd args) "echo no test running for now"))
