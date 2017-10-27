@@ -54,7 +54,24 @@
 (defn slack-notify-develop [args ctx]
   (let [rev (:revision args)
         sha  (if rev (subs rev 0 7) "")
-        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> (develop branch) to https://commiteth.com:444" sha sha)]
+        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> (develop branch) to https://openbounty.status.im:444" sha sha)]
+    (println "Sending slack notification" msg)
+    (slack/slack-notify msg)
+    {:status :success}))
+
+
+(defn slack-notify-failure-master [args ctx]
+  (let [rev (:revision args)
+        sha  (if rev (subs rev 0 7) "")
+        msg (format "Failed to build revision <https://github.com/status-im/commiteth/commit/%s|%s> (master branch)" sha sha)]
+    (println "Sending slack notification" msg)
+    (slack/slack-notify msg)
+    {:status :success}))
+
+(defn slack-notify-failure-develop [args ctx]
+  (let [rev (:revision args)
+        sha  (if rev (subs rev 0 7) "")
+        msg (format "Failed to build revision <https://github.com/status-im/commiteth/commit/%s|%s> (develop branch)" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
