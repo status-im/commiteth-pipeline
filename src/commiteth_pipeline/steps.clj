@@ -46,7 +46,7 @@
 (defn slack-notify-master [args ctx]
   (let [rev (:revision args)
         sha  (if rev (subs rev 0 7) "")
-        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> (master branch) to https://commiteth.com" sha sha)]
+        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> (master branch) to https://openbounty.status.im" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
