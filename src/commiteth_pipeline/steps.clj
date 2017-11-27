@@ -7,7 +7,7 @@
    [commiteth-pipeline.slack :as slack]))
 
 
-(def repo-uri "https://github.com/status-im/commiteth.git")
+(def repo-uri "https://github.com/status-im/open-bounty.git")
 
 (defn wait-for-git-master [args ctx]
   (git/wait-for-git ctx repo-uri
@@ -46,7 +46,7 @@
 (defn slack-notify-master [args ctx]
   (let [rev (:revision args)
         sha  (if rev (subs rev 0 7) "")
-        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> (master branch) to https://openbounty.status.im" sha sha)]
+        msg (format "Deployed revision <https://github.com/status-im/open-bounty/commit/%s|%s> (master branch) to https://openbounty.status.im" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
@@ -54,7 +54,7 @@
 (defn slack-notify-develop [args ctx]
   (let [rev (:revision args)
         sha  (if rev (subs rev 0 7) "")
-        msg (format "Deployed revision <https://github.com/status-im/commiteth/commit/%s|%s> (develop branch) to https://openbounty.status.im:444" sha sha)]
+        msg (format "Deployed revision <https://github.com/status-im/open-bounty/commit/%s|%s> (develop branch) to https://openbounty.status.im:444" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
@@ -63,7 +63,7 @@
 (defn slack-notify-failure-master [args ctx]
   (let [rev (:revision args)
         sha  (if rev (subs rev 0 7) "")
-        msg (format "Failed to build revision <https://github.com/status-im/commiteth/commit/%s|%s> (master branch)" sha sha)]
+        msg (format "Failed to build revision <https://github.com/status-im/open-bounty/commit/%s|%s> (master branch)" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
@@ -71,7 +71,7 @@
 (defn slack-notify-failure-develop [args ctx]
   (let [rev (:revision args)
         sha  (if rev (subs rev 0 7) "")
-        msg (format "Failed to build revision <https://github.com/status-im/commiteth/commit/%s|%s> (develop branch)" sha sha)]
+        msg (format "Failed to build revision <https://github.com/status-im/open-bounty/commit/%s|%s> (develop branch)" sha sha)]
     (println "Sending slack notification" msg)
     (slack/slack-notify msg)
     {:status :success}))
